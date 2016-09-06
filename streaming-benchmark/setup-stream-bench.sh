@@ -64,6 +64,14 @@ pushd streaming-benchmarks
 
   /root/spark/sbin/slaves.sh $PWD/kafka_2.10-0.8.2.1/bin/kafka-server-start.sh -daemon /root/kafka.properties
 
+# Setup flink
+   wget http://mirror.stjschools.org/public/apache/flink/flink-1.1.1/flink-1.1.1-bin-hadoop1-scala_2.10.tgz
+   tar -xf flink-1.1.1-bin-hadoop1-scala_2.10.tgz
+   cp /root/spark-ec2/slaves ./flink-1.1.1/conf/slaves
+   head -1 /root/spark-ec2/masters | awk '{print $1":8081"}' > ./flink-1.1.1/conf/masters
+   /root/spark-ec2/copy-dir ./flink-1.1.1
+   echo "NOTE: You still need to configure flink in ./flink-1.1.1/conf/flink-conf.yaml. See flink-conf.yaml.template for an example"
+
 popd
 
 popd
